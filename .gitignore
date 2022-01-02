@@ -5,3 +5,4 @@ go.mod
 .gitignore
 goroutine_test.go
 redis_test.go
+go.sum
