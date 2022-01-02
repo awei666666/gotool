@@ -36,3 +36,4 @@ func (m *LockMap) Set(k string, v interface{}) bool {
 	wgMap[k] = v
 	return true
 }
+
