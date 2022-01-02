@@ -3,4 +3,5 @@ main.go
 .vscode
 go.mod
 .gitignore
-
+goroutine_test.go
+redis_test.go
