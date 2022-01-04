@@ -5,36 +5,36 @@ import (
 	"sync"
 )
 
-type MapString struct {
-	StringMap map[string]string
+type MapIntString struct {
+	StringMap map[int]string
 	lock      *sync.RWMutex
 }
 
-func newMapString(value map[string]string) *MapString {
-	m :=  &MapString{}
+func NewMapIntString(value map[int]string) *MapIntString {
+	m :=  &MapIntString{}
 	if value == nil {
-		m.StringMap = make(map[string]string, 0)
+		m.StringMap = make(map[int]string, 0)
 	}
 	m.StringMap = value
 	return m
 }
 
 //线程安全添加数据
-func (m *MapString) AddMap(k string, v string) *MapString {
+func (m *MapIntString) AddMap(k int, v string) *MapIntString {
 	m.lock.Lock()
 	defer m.lock.Unlock()
 	m.StringMap[k] = v
 	return m
 }
 
-type InArrayString struct {
+type InArrayIntString struct {
 	B bool
-	Key string
+	Key int
 	Value string
 }
 
-func (m *MapString) InArrayValue(value string) *InArrayString {
-	res := &InArrayString{B:false}
+func (m *MapIntString) InArrayValue(value string) *InArrayIntString {
+	res := &InArrayIntString{B:false}
 	for k,v := range m.StringMap {
 		if v == value {
 			res.B = true
@@ -45,8 +45,8 @@ func (m *MapString) InArrayValue(value string) *InArrayString {
 	return res
 }
 
-func (m *MapString) InArrayKey(key string) *InArrayString {
-	res := &InArrayString{B:false}
+func (m *MapIntString) InArrayKey(key int) *InArrayIntString {
+	res := &InArrayIntString{B:false}
 	for k,v := range m.StringMap {
 		if k == key {
 			res.B = true
@@ -58,11 +58,11 @@ func (m *MapString) InArrayKey(key string) *InArrayString {
 }
 
 // 返回inArray的结果，如果是true 则证明需要判断的值，存在在map中
-func(i *InArrayString) IsOk () bool {
+func(i *InArrayIntString) IsOk () bool {
 	return i.B
 }
 
-func (m *MapString) GetValue() []string {
+func (m *MapIntString) GetValue() []string {
 	var res []string
 	for _, v := range m.StringMap {
 		res = append(res, v)
@@ -70,30 +70,30 @@ func (m *MapString) GetValue() []string {
 	return res
 }
 
-func (m *MapString) GetKey() []string {
-	var res []string
+func (m *MapIntString) GetKey() []int {
+	var res []int
 	for k, _ := range m.StringMap {
 		res = append(res, k)
 	}
 	return res
 }
 
-func (m *MapString) DelByKey(key string) *MapString {
+func (m *MapIntString) DelByKey(key int) *MapIntString {
 	delete(m.StringMap, key)
 	return m
 }
 
-func (m *MapString) Clear() *MapString {
-	m.StringMap = make(map[string]string, 0)
+func (m *MapIntString) Clear() *MapIntString {
+	m.StringMap = make(map[int]string, 0)
 	return m
 }
 
-func (m *MapString) ToJson() string {
+func (m *MapIntString) ToJson() string {
 	B, _ := json.Marshal(m.StringMap)
 	return string(B)
 }
 
-func (m *MapString) Merge(list map[string]string) *MapString {
+func (m *MapIntString) Merge(list map[int]string) *MapIntString {
 	for k,v := range list {
 		m.StringMap[k] = v
 	}

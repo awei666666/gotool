@@ -10,7 +10,7 @@ type MapInterface struct {
 	lock      *sync.RWMutex
 }
 
-func newMapInterface(value map[string]interface{}) *MapInterface {
+func NewMapInterface(value map[string]interface{}) *MapInterface {
 	m :=  &MapInterface{}
 	if value == nil {
 		m.StringMap = make(map[string]interface{}, 0)
