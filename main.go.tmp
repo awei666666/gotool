@@ -1,0 +1,41 @@
+package main
+
+import (
+	"fmt"
+	"gotool/goroutine"
+	"strconv"
+)
+
+func main (){
+	fmt.Println("kk")
+	for i:=0;i<10;i++{
+
+		is := strconv.Itoa(i)
+		goroutine.AddGo("key_"+is, func(funcValue ...interface{}) interface{} {
+			if funcValue[0].(string) == "2" {
+				panic("错误"+funcValue[0].(string))
+			}
+			if funcValue[0].(string) == "0" {
+				return 3/funcValue[0].(int)
+			}
+			return "key_value——"+funcValue[0].(string)
+		}, is)
+	}
+
+	data := goroutine.Wait()
+
+	fmt.Println(goroutine.GetValueByKey("key_5"))
+	fmt.Println(goroutine.GetValueByKey("key_0"))
+	fmt.Println(goroutine.GetValueByKey("key_2"))
+
+	//for k,v := range data {
+	//	fmt.Println(k,v)
+	//	if v == nil {
+	//		fmt.Println("value is nil, key is :", k)
+	//		errM := goroutine.GetErrMap()
+	//		fmt.Println(errM[k])
+	//	}
+	//}
+	fmt.Println(data)
+
+}

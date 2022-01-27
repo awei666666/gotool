@@ -1,9 +1,7 @@
 main.go
 .idea
 .vscode
-go.mod
 .gitignore
 goroutine_test.go
 redis_test.go
-go.sum
 *_test.go
